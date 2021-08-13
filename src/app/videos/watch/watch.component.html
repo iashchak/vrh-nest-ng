@@ -1,0 +1,10 @@
+<div
+  plyr
+  style="height: 100vh"
+  class="w-100"
+  plyrTitle="Video 1"
+  [plyrPlaysInline]="true"
+  [plyrSources]="videoSources"
+  (plyrInit)="player = $event"
+  (plyrPlay)="played($event)"
+></div>
