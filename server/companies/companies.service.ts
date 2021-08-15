@@ -6,8 +6,9 @@ import { Company } from './entities/company.entity';
 
 @Injectable()
 export class CompaniesService extends MongooseCrudService<Company> {
-  constructor(@InjectModel(Company) public model: ReturnModelType<typeof Company>) {
-    super(model)
+  constructor(
+    @InjectModel(Company) public model: ReturnModelType<typeof Company>
+  ) {
+    super(model);
   }
 }
-

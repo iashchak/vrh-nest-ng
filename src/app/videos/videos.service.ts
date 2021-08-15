@@ -3,11 +3,10 @@ import { Observable, of } from 'rxjs';
 import { Video } from './video';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class VideosService {
-
-  constructor() { }
+  constructor() {}
 
   getVideos(): Observable<Video[]> {
     return of([
@@ -19,10 +18,10 @@ export class VideosService {
         sources: [
           {
             size: 720,
-            src: '/assets/static/1.mp4'
-          }
-        ]
+            src: '/assets/static/1.mp4',
+          },
+        ],
       },
-    ])
+    ]);
   }
 }

@@ -7,7 +7,6 @@ import { Video } from './entities/video.entity';
 @Injectable()
 export class VideosService extends MongooseCrudService<Video> {
   constructor(@InjectModel(Video) public model: ReturnModelType<typeof Video>) {
-    super(model)
+    super(model);
   }
 }
-

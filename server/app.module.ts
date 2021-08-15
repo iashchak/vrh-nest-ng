@@ -7,16 +7,18 @@ import { AppServerModule } from '../src/main.server';
 import { AuthModule } from './auth/auth.module';
 import { CompaniesModule } from './companies/companies.module';
 import { VideosModule } from './videos/videos.module';
+import { FileUploadModule } from './file-upload/file-upload.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({ isGlobal: true }),
     TypegooseModule.forRoot(`${process.env.MONGODB_URL}`, {
       useNewUrlParser: true,
     }),
     AuthModule,
     CompaniesModule,
     VideosModule,
+    FileUploadModule,
     AngularUniversalModule.forRoot({
       bootstrap: AppServerModule,
       viewsPath: join(process.cwd(), 'dist/vrh-ng/browser'),

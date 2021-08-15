@@ -7,8 +7,6 @@ import { Company } from './entities/company.entity';
 @Module({
   controllers: [CompaniesController],
   providers: [CompaniesService],
-  imports: [
-    TypegooseModule.forFeature([Company])
-  ]
+  imports: [TypegooseModule.forFeature([Company])],
 })
 export class CompaniesModule {}

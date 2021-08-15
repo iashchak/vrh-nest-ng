@@ -5,8 +5,8 @@ import { Company } from './entities/company.entity';
 
 @Crud({
   model: {
-    type: Company
-  }
+    type: Company,
+  },
 })
 @Controller('companies')
 export class CompaniesController implements CrudController<Company> {

@@ -114,6 +114,7 @@
               "@nestjs/websockets",
               "@nestjs/websockets/socket-module",
               "@nestjs/swagger",
+              "nestjs-minio-client",
               "swagger-ui-express",
               "cache-manager"
             ]
