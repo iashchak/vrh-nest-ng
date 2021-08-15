@@ -1,5 +1,8 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, InternalServerErrorException } from '@nestjs/common';
 import { sign } from 'jsonwebtoken';
+import { User } from 'server/users/entities/user.entity';
+import { UsersService } from 'server/users/users.service';
+import { JwtService } from './jwt.service';
 
 export enum Provider {
   VKONTAKTE = 'vkontakte',
@@ -9,7 +12,10 @@ export enum Provider {
 export class AuthService {
   private readonly JWT_SECRET_KEY = 'VERY_SECRET_KEY'; // <- replace this with your secret key
 
-  constructor(/*private readonly usersService: UsersService*/) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly jwtService: JwtService
+  ) {}
 
   async validateOAuthLogin(
     thirdPartyId: string,
@@ -35,5 +41,18 @@ export class AuthService {
     } catch (err) {
       throw new InternalServerErrorException('validateOAuthLogin', err.message);
     }
+  }
+
+  /**
+   * Generating new JWT tokens to keep the user authenticated
+   *
+   * @param token
+   * @returns data - The new access and the refresh token to authenticate the user and the user
+   */
+  async refreshToken(token: string): Promise<any> {
+    const user: User = await this.jwtService.verify(token);
+    const tokens = await this.jwtService.generateToken(user);
+
+    return { tokens, user };
   }
 }

@@ -1,11 +1,21 @@
 import { Module } from '@nestjs/common';
+import { UsersModule } from 'server/users/users.module';
 import { AuthController } from './auth.controller';
-import { AuthService } from './auth/auth.service';
-import { JwtStrategy } from './auth/jwt.strategy';
-import { VkontakteStrategy } from './auth/vkontakte.strategy';
+import { AuthService } from './auth.service';
+import { JwtService } from './jwt.service';
+import { JwtStrategy } from './jwt.strategy';
+import { VkontakteStrategy } from './vkontakte.strategy';
 
 @Module({
+  imports: [UsersModule],
+  providers: [
+    AuthController,
+    AuthService,
+    JwtService,
+    VkontakteStrategy,
+    JwtStrategy,
+  ],
   controllers: [AuthController],
-  providers: [AuthService, VkontakteStrategy, JwtStrategy],
+  exports: [JwtService, AuthService],
 })
 export class AuthModule {}

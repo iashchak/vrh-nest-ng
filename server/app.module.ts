@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { CompaniesModule } from './companies/companies.module';
 import { VideosModule } from './videos/videos.module';
 import { FileUploadModule } from './file-upload/file-upload.module';
+import { ChatModule } from './chat/chat.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { FileUploadModule } from './file-upload/file-upload.module';
       bootstrap: AppServerModule,
       viewsPath: join(process.cwd(), 'dist/vrh-ng/browser'),
     }),
+    ChatModule,
   ],
 })
 export class AppModule {}
