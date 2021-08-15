@@ -9,16 +9,16 @@ import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
-    AngularUniversalModule.forRoot({
-      bootstrap: AppServerModule,
-      viewsPath: join(process.cwd(), 'dist/vrh-ng/browser'),
-    }),
     ConfigModule.forRoot(),
     TypegooseModule.forRoot(`${process.env.MONGODB_URL}`, {
       useNewUrlParser: true,
     }),
     CompaniesModule,
     AuthModule,
+    AngularUniversalModule.forRoot({
+      bootstrap: AppServerModule,
+      viewsPath: join(process.cwd(), 'dist/vrh-ng/browser'),
+    }),
   ],
 })
 export class AppModule {}

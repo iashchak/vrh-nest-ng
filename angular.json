@@ -113,6 +113,8 @@
               "@nestjs/microservices/microservices-module",
               "@nestjs/websockets",
               "@nestjs/websockets/socket-module",
+              "@nestjs/swagger",
+              "swagger-ui-express",
               "cache-manager"
             ]
           },
