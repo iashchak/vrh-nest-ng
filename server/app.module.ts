@@ -4,8 +4,9 @@ import { AngularUniversalModule } from '@nestjs/ng-universal';
 import { TypegooseModule } from 'nestjs-typegoose';
 import { join } from 'path';
 import { AppServerModule } from '../src/main.server';
-import { CompaniesModule } from './companies/companies.module';
 import { AuthModule } from './auth/auth.module';
+import { CompaniesModule } from './companies/companies.module';
+import { VideosModule } from './videos/videos.module';
 
 @Module({
   imports: [
@@ -13,8 +14,9 @@ import { AuthModule } from './auth/auth.module';
     TypegooseModule.forRoot(`${process.env.MONGODB_URL}`, {
       useNewUrlParser: true,
     }),
-    CompaniesModule,
     AuthModule,
+    CompaniesModule,
+    VideosModule,
     AngularUniversalModule.forRoot({
       bootstrap: AppServerModule,
       viewsPath: join(process.cwd(), 'dist/vrh-ng/browser'),

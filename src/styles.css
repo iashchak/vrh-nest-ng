@@ -1,0 +1,14 @@
+/* You can add global styles to this file, and also import other style files */
+/*  // ебучий md-bootstrap имеет ебучий z-index: 1020 */
+.cdk-overlay-container {
+    z-index: 1021;
+}
+.plyr--video {
+	height: 90vh;
+	display: flex;
+	align-items: center;
+  	justify-content: center; 
+}
+.plyr__video-wrapper {
+	width: 100%; 
+}

@@ -1,7 +1,7 @@
 import { prop } from "@typegoose/typegoose";
 import { IsString } from "class-validator";
 
-export class Company {  
+export class Video {  
     @IsString()
     @prop({ required: true })
     name!: string;

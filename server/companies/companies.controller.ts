@@ -1,23 +1,14 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-  UseGuards,
-} from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
-import { Crud } from 'nestjs-mongoose-crud'
-import { InjectModel, } from 'nestjs-typegoose';
-import { ModelType } from '@typegoose/typegoose/lib/types';
+import { Controller } from '@nestjs/common';
+import { Crud, CrudController, CrudService } from '@nestjsx/crud';
+import { CompaniesService } from './companies.service';
 import { Company } from './entities/company.entity';
 
-@Controller('companies')
 @Crud({
-  model: Company
+  model: {
+    type: Company
+  }
 })
-export class CompaniesController {
-  constructor(@InjectModel(Company) public model: ModelType<Company>) {}
+@Controller('companies')
+export class CompaniesController implements CrudController<Company> {
+  constructor(readonly service: CompaniesService) {}
 }
