@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable, InternalServerErrorException } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { sign } from 'jsonwebtoken';
 import { User } from 'server/users/entities/user.entity';
 import { UsersService } from 'server/users/users.service';
@@ -12,10 +12,7 @@ export enum Provider {
 export class AuthService {
   private readonly JWT_SECRET_KEY = 'VERY_SECRET_KEY'; // <- replace this with your secret key
 
-  constructor(
-    private readonly usersService: UsersService,
-    private readonly jwtService: JwtService
-  ) {}
+  constructor(private readonly jwtService: JwtService) {}
 
   async validateOAuthLogin(
     thirdPartyId: string,

@@ -1,46 +1,55 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { prop, Ref } from '@typegoose/typegoose';
+import { Transform } from 'class-transformer';
 import { IsString } from 'class-validator';
-import { ObjectId } from 'mongoose';
 import { User } from 'server/users/entities/user.entity';
+import {
+  Entity,
+  Column,
+  ObjectID,
+  ObjectIdColumn,
+  OneToMany,
+  ManyToMany,
+  PrimaryColumn,
+} from 'typeorm';
 import { Message } from './message.entity';
 
+@Entity()
 export class Room {
-  
-  id!: ObjectId;
-  _id!: ObjectId;
+
+  @ObjectIdColumn()
+  @Transform((value) => value.toString(), { toPlainOnly: true })
+  _id!: ObjectID;
   
   @ApiProperty()
   @IsString()
-  @prop({ required: true })
+  @Column()
   name!: String;
-  
+
   @ApiProperty()
   @IsString()
-  @prop({ required: true })
+  @Column()
   description?: String;
-  
+
   @ApiProperty()
-  @prop({ required: true, default: false })
+  @Column({ default: false })
   is_user!: Boolean;
-  
+
   @ApiProperty()
-  @prop({ required: true, default: false })
+  @Column({ default: false })
   is_private!: Boolean;
-  
+
+  @ManyToMany(() => User, (user) => user.rooms)
+  users?: User;
+
   @ApiProperty()
-  @prop({ ref: () => User, default: () => ([]) })
-  users?: Ref<User>[];
-  
+  @OneToMany(() => Message, (message) => message.room)
+  messages?: Message[];
+
   @ApiProperty()
-  @prop({ ref: () => Message, default: () => ([]) })
-  messages?: Ref<Message>[];
-  
-  @ApiProperty()
-  @prop({ required: true, default: Date.now })
+  @Column({ default: Date.now })
   created_at!: Date;
-  
+
   @ApiProperty()
-  @prop({ required: true, default: Date.now })
+  @Column({ default: Date.now })
   updated_at!: Date;
 }

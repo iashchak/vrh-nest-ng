@@ -13,6 +13,11 @@ const routes: Routes = [
       import('./videos/videos.module').then((m) => m.VideosModule),
   },
   {
+    path: 'consult',
+    loadChildren: () =>
+      import('./consult/consult.module').then((m) => m.ConsultModule),
+  },
+  {
     path: '',
     redirectTo: 'videos',
     pathMatch: 'full',

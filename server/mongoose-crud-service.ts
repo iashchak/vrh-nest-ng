@@ -1,18 +1,19 @@
 import { CrudRequest, CreateManyDto, CrudService } from '@nestjsx/crud';
-import { ModelType } from '@typegoose/typegoose/lib/types';
-import { Model } from 'mongoose';
+import { FindManyOptions, MongoRepository } from 'typeorm';
+import { EntityFieldsNames } from 'typeorm/common/EntityFieldsNames';
 
 export class MongooseCrudService<T> extends CrudService<T> {
+  constructor(protected readonly repo: MongoRepository<T>) {
+    super();
+  }
+
   recoverOne(req: CrudRequest): Promise<void | T> {
     throw new Error('Method not implemented.');
   }
 
-  constructor(public model: Model<any> | ModelType<{}>) {
-    super();
-  }
-
-  buildQuery(req: CrudRequest) {
-    this.model;
+  buildQuery(
+    req: CrudRequest
+  ): FindManyOptions<T> & { page: number; id: string } {
     let {
       limit = 10,
       page = 1,
@@ -26,18 +27,6 @@ export class MongooseCrudService<T> extends CrudService<T> {
     if (page > 1) {
       skip = (page - 1) * limit;
     }
-    const options = {
-      page,
-      skip,
-      limit,
-      sort: sort.reduce(
-        (acc: Record<string, number>, { order, field }) => (
-          (acc[field] = order === 'ASC' ? 1 : -1), acc
-        ),
-        {}
-      ),
-      select: fields.join(' '),
-    };
     const where = filter.reduce(
       (acc: Record<string, object | null>, { field, operator, value }) => {
         let cond = null;
@@ -76,89 +65,80 @@ export class MongooseCrudService<T> extends CrudService<T> {
       },
       {}
     );
+    const order: { [P in EntityFieldsNames<T>]?: 1 | -1 } = sort.reduce(
+      (acc, { field, order }) => ({
+        ...acc,
+        [field]: order === 'ASC' ? 1 : -1,
+      }),
+      {}
+    );
     const idParam = paramsFilter.find((v) => v.field === 'id');
+    const id = idParam ? idParam.value : null;
+
     return {
-      options,
+      page,
+      skip,
+      take: limit,
+      order,
+      select: fields as Array<keyof T>,
       where,
-      id: idParam ? idParam.value : null,
-      populate: join.map((v) => v.field),
+      relations: join.map((v) => v.field),
+      id,
     };
   }
 
   async getMany(req: CrudRequest) {
-    const { options, where, populate } = this.buildQuery(req);
-    const queryBuilder = this.model
-      .find()
-      .setOptions({
-        ...options,
-      })
-      .where({
-        ...where,
-      });
-    populate.map((v) => {
-      queryBuilder.populate(v);
-    });
-
-    const data = await queryBuilder.exec();
-    if (options.page) {
-      const total = await this.model.countDocuments(where);
-      return this.createPageInfo(data, total, options.limit, options.skip);
-    }
-    return data;
+    const { page, ...query } = this.buildQuery(req);
+    const data = await this.repo.find(query);
+    const total = await this.repo.count(query);
+    return this.createPageInfo(data, total, query.take || 0, query.skip || 0);
   }
 
   async getOne(req: CrudRequest): Promise<T> {
-    const { options, where, id, populate } = this.buildQuery(req);
-    const queryBuilder = this.model
-      .findById(id)
-      .setOptions({
-        ...options,
-      })
-      .where({
-        ...where,
-      });
-    populate.map((v) => {
-      queryBuilder.populate(v);
-    });
-
-    const data = await queryBuilder.exec();
-
-    !data && this.throwNotFoundException(this.model.modelName);
+    const { id, ...query } = this.buildQuery(req);
+    const data = await this.repo.findOne(id, query);
+    if (!data) {
+      this.throwNotFoundException(this.repo.metadata.name);
+      throw new Error('UNREACHABLE');
+    }
 
     return data;
   }
-  async createOne(req: CrudRequest, dto: T): Promise<T> {
-    return this.model.create(dto);
+  async createOne(req: CrudRequest | undefined, dto: T): Promise<T> {
+    return await this.repo.save(dto);
   }
-  async createMany(
-    req: CrudRequest,
-    { bulk }: CreateManyDto<T[]>
-  ): Promise<T[]> {
-    return this.model.insertMany(bulk) as Promise<T[]>;
+  async createMany(req: CrudRequest, { bulk }: CreateManyDto<T>): Promise<T[]> {
+    await this.repo.insertMany(bulk);
+    return bulk;
   }
   async updateOne(req: CrudRequest, dto: T): Promise<T> {
     const { id } = this.buildQuery(req);
-    const entity = await this.model.findById(id);
+    const entity = await this.repo.findOne(id);
+    if (!entity) {
+      this.throwNotFoundException(this.repo.metadata.name);
+      throw new Error('UNREACHABLE');
+    }
     Object.assign(entity, dto);
-    await entity.save();
+    await this.repo.save(entity);
     return entity;
   }
   async replaceOne(req: CrudRequest, dto: T): Promise<T> {
     const { id } = this.buildQuery(req);
-    const data = await this.model.replaceOne(
+    const data = await this.repo.replaceOne(
       {
-        _id: id,
+        id
       },
       dto
     );
-    !data && this.throwNotFoundException(this.model.modelName);
-    return this.model.findById(id);
+    if (!data) {
+      this.throwNotFoundException(this.repo.metadata.name);
+      throw new Error('UNREACHABLE');
+    }
+    return this.repo.findOne(id) as Promise<T>;
   }
   async deleteOne(req: CrudRequest): Promise<void | T> {
     const { id } = this.buildQuery(req);
-    const data = await this.model.findById(id);
-    !data && this.throwNotFoundException(this.model.modelName);
-    await this.model.findByIdAndDelete(id);
-    return data;
+    await this.repo.findOneAndDelete({ id });
+    return;
   }
 }

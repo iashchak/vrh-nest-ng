@@ -1,37 +1,57 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { modelOptions, prop } from '@typegoose/typegoose';
+import { Transform } from 'class-transformer';
 import { IsString } from 'class-validator';
-import { ObjectId } from 'mongoose';
+import { Message } from 'server/rooms/entities/message.entity';
+import { Room } from 'server/rooms/entities/room.entity';
+import {
+  Entity,
+  Column,
+  ObjectID,
+  ObjectIdColumn,
+  ManyToMany,
+  OneToMany,
+  PrimaryColumn,
+} from 'typeorm';
 
+@Entity()
 export class User {
-  
-  id!: ObjectId;
-  _id!: ObjectId;
 
+  @ObjectIdColumn()
+  @Transform((value) => value.toString(), { toPlainOnly: true })
+  _id!: ObjectID;
+  
   @ApiProperty()
   @IsString()
-  @prop({ required: true })
+  @Column({})
   name!: string;
 
   @ApiProperty()
   @IsString()
-  @prop({ required: true, unique: true })
+  @Column({ unique: true })
   username!: string;
 
   @ApiProperty()
   @IsString()
-  @prop({ required: true, unique: true })
+  @Column({ unique: true })
   email!: string;
 
   @ApiProperty()
-  @prop({ required: true })
+  @Column({})
   admin!: boolean;
 
   @ApiProperty()
-  @prop({ required: true, default: Date.now })
+  @Column({ default: Date.now })
   created_at!: Date;
 
   @ApiProperty()
-  @prop({ required: true, default: Date.now })
+  @Column({ default: Date.now })
   updated_at!: Date;
+
+  @ApiProperty()
+  @ManyToMany(() => Room, (room) => room.users)
+  rooms?: Room[];
+
+  @ApiProperty()
+  @OneToMany(() => Message, (message) => message.user)
+  messages?: Message[];
 }

@@ -10,6 +10,7 @@ import { RoomsService } from '../rooms/rooms.service';
 import { Server, Socket } from 'socket.io';
 import { JwtService } from 'server/auth/jwt.service';
 import { User } from 'server/users/entities/user.entity';
+import { MessageService } from 'server/rooms/message.service';
 type Client = any;
 
 @WebSocketGateway({ namespace: 'rooms' })
@@ -21,7 +22,8 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
   constructor(
     private jwtService: JwtService,
-    private roomService: RoomsService
+    private roomService: RoomsService,
+    private messageService: MessageService
   ) {}
 
   async handleConnection(socket: Socket) {
@@ -55,21 +57,21 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   }
 
   @SubscribeMessage('message')
-  async onMessage(client: Client, data: any) {
+  async onMessage(client: Client, data: { message: string; room: string }[]) {
     const event: string = 'message';
-    const result = data[0];
+    const { message, room } = data[0];
 
-    await this.roomService.addMessage(result.message, result.room);
-    client.broadcast.to(result.room).emit(event, result.message);
+    await this.roomService.addMessage(room, message);
+    client.broadcast.to(room).emit(event, message);
 
-    return of({ event, data: result.message });
+    return of({ event, data: message });
   }
 
   @SubscribeMessage('join')
   async onRoomJoin(client: Client, data: any): Promise<any> {
     client.join(data[0]);
 
-    const messages = await this.roomService.findMessages(data, 25);
+    const messages = await this.messageService.getByParent(data[0], 25);
 
     // Send last messages to the connected user
     client.emit('message', messages);

@@ -1,5 +1,4 @@
 import { Injectable, HttpStatus, HttpException } from '@nestjs/common';
-import { Model } from 'mongoose';
 import * as jwt from 'jsonwebtoken';
 import * as os from 'os';
 
@@ -12,7 +11,8 @@ import { ConfigService } from '@nestjs/config';
 export class JwtService {
   constructor(
     private readonly configService: ConfigService,
-    private readonly usersService: UsersService) {}
+    private readonly usersService: UsersService
+  ) {}
 
   /**
    * Generates a new JWT token
@@ -23,18 +23,26 @@ export class JwtService {
   async generateToken(user: User): Promise<any> {
     const payload = {
       sub: {
-        _id: user._id,
+        id: user._id,
         email: user.email,
         username: user.username,
       },
       iss: os.hostname(),
     };
-    const accessToken = await jwt.sign(payload, this.configService.get<string>('JWT_SECRET', ''), {
-      expiresIn: 30,
-    });
-    const refreshToken = await jwt.sign(payload, this.configService.get<string>('JWT_SECRET', ''), {
-      expiresIn: 30,
-    });
+    const accessToken = await jwt.sign(
+      payload,
+      this.configService.get<string>('JWT_SECRET', ''),
+      {
+        expiresIn: 30,
+      }
+    );
+    const refreshToken = await jwt.sign(
+      payload,
+      this.configService.get<string>('JWT_SECRET', ''),
+      {
+        expiresIn: 30,
+      }
+    );
 
     return { accessToken, refreshToken };
   }
@@ -47,8 +55,10 @@ export class JwtService {
    */
   async verify(token: string, isWs: boolean = false): Promise<User> {
     try {
-      const payload = <any>jwt.verify(token, this.configService.get<string>('JWT_SECRET', ''));
-      const user = await this.usersService.findById(payload.sub._id);
+      const payload = <any>(
+        jwt.verify(token, this.configService.get<string>('JWT_SECRET', ''))
+      );
+      const user = await this.usersService.getOne(payload.sub._id);
 
       if (!user) {
         if (isWs) {
