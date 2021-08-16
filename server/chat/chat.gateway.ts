@@ -13,7 +13,7 @@ import { User } from 'server/users/entities/user.entity';
 import { MessageService } from 'server/rooms/message.service';
 type Client = any;
 
-@WebSocketGateway({ namespace: 'rooms' })
+@WebSocketGateway({ path: '/api/consult' })
 export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer()
   server!: Server;

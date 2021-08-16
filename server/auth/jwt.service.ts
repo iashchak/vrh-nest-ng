@@ -58,6 +58,7 @@ export class JwtService {
       const payload = <any>(
         jwt.verify(token, this.configService.get<string>('JWT_SECRET', ''))
       );
+      console.log(payload);
       const user = await this.usersService.getOne(payload.sub._id);
 
       if (!user) {

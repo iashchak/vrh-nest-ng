@@ -13,10 +13,10 @@ export class ChatService {
   }
 
   receiveChat() {
-    return this.socket.fromEvent('chat');
+    return this.socket.fromEvent<{}[]>('chat');
   }
 
   getUsers() {
-    return this.socket.fromEvent('users');
+    return this.socket.fromEvent<{}[]>('users');
   }
 }
