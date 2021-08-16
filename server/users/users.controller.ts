@@ -1,22 +1,20 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Delete,
-  Body,
-  HttpException,
-  Put,
-  Req,
-} from '@nestjs/common';
-import { Request } from 'express';
-import { User } from './entities/user.entity';
-
-import { UsersService } from './users.service';
+import { Controller } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { Crud, CrudController } from '@nestjsx/crud';
+import { User } from './entities/user.entity';
+import { UsersService } from './users.service';
 
+@ApiTags('users')
 @Crud({
   model: {
     type: User,
+  },
+  params: {
+    id: {
+      field: '_id',
+      type: 'string',
+      primary: true,
+    },
   },
 })
 @Controller('users')

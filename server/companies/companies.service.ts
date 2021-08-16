@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { MongooseCrudService } from 'server/mongoose-crud-service';
-import { Company } from './entities/company.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MongoRepository } from 'typeorm';
+import { MongooseCrudService } from '../mongoose-crud-service';
+import { Company } from './entities/company.entity';
 
 @Injectable()
 export class CompaniesService extends MongooseCrudService<Company> {

@@ -1,7 +1,6 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { sign } from 'jsonwebtoken';
-import { User } from 'server/users/entities/user.entity';
-import { UsersService } from 'server/users/users.service';
+import { User } from '../users/entities/user.entity';
 import { JwtService } from './jwt.service';
 
 export enum Provider {

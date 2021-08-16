@@ -1,14 +1,14 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { AngularUniversalModule } from '@nestjs/ng-universal';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
 import { AppServerModule } from '../src/main.server';
 import { AuthModule } from './auth/auth.module';
-import { CompaniesModule } from './companies/companies.module';
-import { VideosModule } from './videos/videos.module';
-import { FileUploadModule } from './file-upload/file-upload.module';
 import { ChatModule } from './chat/chat.module';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { CompaniesModule } from './companies/companies.module';
+import { FileUploadModule } from './file-upload/file-upload.module';
+import { VideosModule } from './videos/videos.module';
 
 @Module({
   imports: [
@@ -20,7 +20,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       synchronize: true,
       useNewUrlParser: true,
       useUnifiedTopology: true,
-      logging: true
+      logging: true,
     }),
     AuthModule,
     CompaniesModule,

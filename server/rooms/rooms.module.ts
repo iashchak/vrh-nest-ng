@@ -1,11 +1,10 @@
-import { Module, RequestMethod, MiddlewareConsumer } from '@nestjs/common';
-
+import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Message } from './entities/message.entity';
+import { Room } from './entities/room.entity';
+import { MessageService } from './message.service';
 import { RoomsController } from './rooms.controller';
 import { RoomsService } from './rooms.service';
-import { Room } from './entities/room.entity';
-import { Message } from './entities/message.entity';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { MessageService } from './message.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Room, Message])],

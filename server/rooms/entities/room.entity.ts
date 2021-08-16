@@ -1,25 +1,16 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 import { IsString } from 'class-validator';
-import { User } from 'server/users/entities/user.entity';
-import {
-  Entity,
-  Column,
-  ObjectID,
-  ObjectIdColumn,
-  OneToMany,
-  ManyToMany,
-  PrimaryColumn,
-} from 'typeorm';
+import { Column, Entity, ManyToMany, ObjectIdColumn, OneToMany } from 'typeorm';
+import { User } from '../../users/entities/user.entity';
 import { Message } from './message.entity';
 
 @Entity()
 export class Room {
-
   @ObjectIdColumn()
   @Transform((value) => value.toString(), { toPlainOnly: true })
-  _id!: ObjectID;
-  
+  _id!: string;
+
   @ApiProperty()
   @IsString()
   @Column()
@@ -38,7 +29,7 @@ export class Room {
   @Column({ default: false })
   is_private!: Boolean;
 
-  @ManyToMany(() => User, (user) => user.rooms)
+  @ManyToMany(() => User, (user: User) => user.rooms)
   users?: User;
 
   @ApiProperty()

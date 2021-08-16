@@ -1,16 +1,16 @@
 import {
-  WebSocketGateway,
-  SubscribeMessage,
-  WebSocketServer,
   OnGatewayConnection,
   OnGatewayDisconnect,
+  SubscribeMessage,
+  WebSocketGateway,
+  WebSocketServer,
 } from '@nestjs/websockets';
 import { of } from 'rxjs';
-import { RoomsService } from '../rooms/rooms.service';
 import { Server, Socket } from 'socket.io';
-import { JwtService } from 'server/auth/jwt.service';
-import { User } from 'server/users/entities/user.entity';
-import { MessageService } from 'server/rooms/message.service';
+import { JwtService } from '../auth/jwt.service';
+import { MessageService } from '../rooms/message.service';
+import { RoomsService } from '../rooms/rooms.service';
+import { User } from '../users/entities/user.entity';
 type Client = any;
 
 @WebSocketGateway({ path: '/api/consult' })

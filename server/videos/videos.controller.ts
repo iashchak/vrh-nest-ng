@@ -7,16 +7,24 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiConsumes, ApiBody } from '@nestjs/swagger';
-import { Crud, CrudController, CrudService } from '@nestjsx/crud';
-import { MinioClientService } from 'server/file-upload/minio-client.service';
-import { BufferedFile } from 'server/file-upload/models/buffered-file';
+import { ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
+import { Crud, CrudController } from '@nestjsx/crud';
+import { MinioClientService } from '../file-upload/minio-client.service';
+import { BufferedFile } from '../file-upload/models/buffered-file';
 import { Video } from './entities/video.entity';
 import { VideosService } from './videos.service';
 
+@ApiTags('videos')
 @Crud({
   model: {
     type: Video,
+  },
+  params: {
+    id: {
+      field: '_id',
+      type: 'string',
+      primary: true,
+    },
   },
 })
 @Controller('videos')

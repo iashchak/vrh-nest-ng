@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { MongooseCrudService } from 'server/mongoose-crud-service';
-import { Video } from './entities/video.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MongoRepository } from 'typeorm';
+import { MongooseCrudService } from '../mongoose-crud-service';
+import { Video } from './entities/video.entity';
 
 @Injectable()
 export class VideosService extends MongooseCrudService<Video> {

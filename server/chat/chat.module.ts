@@ -1,9 +1,7 @@
 import { Module } from '@nestjs/common';
-
+import { AuthModule } from '../auth/auth.module';
 // Modules
 import { RoomsModule } from '../rooms/rooms.module';
-import { AuthModule } from '../auth/auth.module';
-
 // Components
 import { ChatGateway } from './chat.gateway';
 

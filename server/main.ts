@@ -8,7 +8,6 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
     .setTitle('Все Работы Хороши API')
-    .addTag('vrh')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);

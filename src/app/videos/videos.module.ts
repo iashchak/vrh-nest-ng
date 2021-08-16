@@ -1,11 +1,9 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import { VideosRoutingModule } from './videos-routing.module';
-import { FeedComponent } from './feed/feed.component';
-import { WatchComponent } from './watch/watch.component';
+import { NgModule } from '@angular/core';
 import { PlyrModule } from 'ngx-plyr';
-import { isPlatformBrowser } from '@angular/common';
+import { FeedComponent } from './feed/feed.component';
+import { VideosRoutingModule } from './videos-routing.module';
+import { WatchComponent } from './watch/watch.component';
 
 @NgModule({
   declarations: [FeedComponent, WatchComponent],

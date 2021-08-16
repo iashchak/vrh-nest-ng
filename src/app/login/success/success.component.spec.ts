@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { SuccessComponent } from './success.component';
 
 describe('SuccessComponent', () => {

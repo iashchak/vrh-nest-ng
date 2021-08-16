@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { MongooseCrudService } from 'server/mongoose-crud-service';
 import { MongoRepository } from 'typeorm';
+import { MongooseCrudService } from '../mongoose-crud-service';
 import { User } from './entities/user.entity';
 
 @Injectable()

@@ -1,14 +1,14 @@
 import {
-  Injectable,
-  Logger,
   HttpException,
   HttpStatus,
   Inject,
+  Injectable,
+  Logger,
 } from '@nestjs/common';
-import { Client } from 'minio';
 import * as crypto from 'crypto';
-import { BufferedFile } from './models/buffered-file';
+import { Client } from 'minio';
 import { MINIO_CONNECTION } from 'nestjs-minio';
+import { BufferedFile } from './models/buffered-file';
 
 @Injectable()
 export class MinioClientService {

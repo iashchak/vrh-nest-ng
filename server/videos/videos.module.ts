@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
-import { VideosService } from './videos.service';
-import { VideosController } from './videos.controller';
-import { Video } from './entities/video.entity';
-import { FileUploadModule } from 'server/file-upload/file-upload.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { FileUploadModule } from '../file-upload/file-upload.module';
+import { Video } from './entities/video.entity';
+import { VideosController } from './videos.controller';
+import { VideosService } from './videos.service';
 @Module({
   controllers: [VideosController],
   providers: [VideosService],

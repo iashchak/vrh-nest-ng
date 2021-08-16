@@ -1,23 +1,20 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Delete,
-  Body,
-  Request,
-  HttpException,
-  HttpStatus,
-  Put,
-  Req,
-} from '@nestjs/common';
-import { Crud, CrudController, GetManyDefaultResponse } from '@nestjsx/crud';
+import { Controller } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
+import { Crud, CrudController } from '@nestjsx/crud';
 import { Room } from './entities/room.entity';
-
 import { RoomsService } from './rooms.service';
 
+@ApiTags('rooms')
 @Crud({
   model: {
     type: Room,
+  },
+  params: {
+    id: {
+      field: '_id',
+      type: 'string',
+      primary: true,
+    },
   },
 })
 @Controller('rooms')

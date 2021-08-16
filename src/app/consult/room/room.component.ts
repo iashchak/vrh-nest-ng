@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable, of } from 'rxjs';
 import { ChatService } from '../chat.service';
-import { of, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-room',

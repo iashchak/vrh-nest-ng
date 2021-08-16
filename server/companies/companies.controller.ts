@@ -1,11 +1,20 @@
 import { Controller } from '@nestjs/common';
-import { Crud, CrudController, CrudService } from '@nestjsx/crud';
+import { ApiTags } from '@nestjs/swagger';
+import { Crud, CrudController } from '@nestjsx/crud';
 import { CompaniesService } from './companies.service';
 import { Company } from './entities/company.entity';
 
+@ApiTags('companies')
 @Crud({
   model: {
     type: Company,
+  },
+  params: {
+    id: {
+      field: '_id',
+      type: 'string',
+      primary: true,
+    },
   },
 })
 @Controller('companies')

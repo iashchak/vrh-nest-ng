@@ -1,11 +1,5 @@
-import {
-  Component,
-  Inject,
-  OnInit,
-  PLATFORM_ID,
-  ViewChild,
-} from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { Component, Inject, PLATFORM_ID, ViewChild } from '@angular/core';
 import { PlyrComponent } from 'ngx-plyr';
 
 @Component({
