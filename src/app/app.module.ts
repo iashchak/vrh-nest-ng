@@ -5,6 +5,8 @@ import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ComponentsModule } from './components/components.module';
+import { EntityDataModule } from '@ngrx/data';
+import { entityConfig } from './entity-metadata';
 
 const config: SocketIoConfig = {
   url: 'ws://localhost:4200',
@@ -19,6 +21,7 @@ const config: SocketIoConfig = {
     AppRoutingModule,
     SocketIoModule.forRoot(config),
     ComponentsModule,
+    EntityDataModule.forRoot(entityConfig),
   ],
   providers: [],
   bootstrap: [AppComponent],
