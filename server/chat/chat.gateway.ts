@@ -5,7 +5,7 @@ import {
   WebSocketGateway,
   WebSocketServer,
 } from '@nestjs/websockets';
-import { of } from 'rxjs';
+import { of } from 'node_modules/rxjs';
 import { Server, Socket } from 'socket.io';
 import { JwtService } from '../auth/jwt.service';
 import { MessageService } from '../rooms/message.service';

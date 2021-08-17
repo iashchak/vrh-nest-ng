@@ -7,13 +7,11 @@ import { ChatService } from '../chat.service';
   templateUrl: './room.component.html',
   styleUrls: ['./room.component.scss'],
 })
-export class RoomComponent implements OnInit {
+export class RoomComponent {
   readonly users$ = this.chatService.getUsers();
   readonly messages$ = this.chatService.receiveChat();
 
   constructor(private readonly chatService: ChatService) {}
-
-  ngOnInit(): void {}
 
   isMyMessage(message: any): Observable<boolean> {
     return of(false);

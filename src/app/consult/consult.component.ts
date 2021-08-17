@@ -6,11 +6,9 @@ import { ChatService } from './chat.service';
   templateUrl: './consult.component.html',
   styleUrls: ['./consult.component.scss'],
 })
-export class ConsultComponent implements OnInit {
+export class ConsultComponent {
   readonly users$ = this.chatService.getUsers();
   readonly messages$ = this.chatService.receiveChat();
 
   constructor(private readonly chatService: ChatService) {}
-
-  ngOnInit(): void {}
 }

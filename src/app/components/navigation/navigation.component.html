@@ -1,17 +1,16 @@
-<nav class="navbar navbar-expand-lg navbar-light w-100 bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-light container-fluid">
   <a class="navbar-brand" [routerLink]="'.'">VRH</a>
-  <!-- Step 3: Toggle the value of the property when the toggler button is clicked. -->
   <button
     class="navbar-toggler"
     type="button"
     (click)="isMenuCollapsed = !isMenuCollapsed"
   >
     &#9776;
+    <!-- <span class="navbar-toggler-icon"></span> -->
   </button>
 
-  <!-- Step 2: Add the ngbCollapse directive to the element below. -->
-  <div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse">
-    <ul class="navbar-nav">
+  <div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
       <li class="nav-item" (click)="isMenuCollapsed = true">
         <a class="nav-link" aria-current="page" [routerLink]="['/']"> Видео </a>
       </li>
@@ -30,23 +29,17 @@
           Консультация юриста
         </a>
       </li>
-      <li ngbDropdown placement="bottom" class="ml-auto">
-        <a
-          class="btn btn-primary dropdown-toggle"
-          role="button"
-          ngbDropdownToggle
-        >
-          Пользователь
-        </a>
-
-        <ul ngbDropdownMenu>
-          <li ngbDropdownItem>
-            <a class="dropdown-item" href="/api/auth/vkontakte">
-              Авторизоваться через Вконтакте
-            </a>
-          </li>
-        </ul>
-      </li>
     </ul>
+    <div ngbDropdown container="body" display="dynamic">
+      <a class="btn btn-secondary btn-sm dropdown-toggle"
+        ngbDropdownToggle>
+        Пользователь
+      </a>
+      <div class="dropdown-menu" ngbDropdownMenu>
+        <a class="dropdown-item" class="dropdown-item" href="/api/auth/vkontakte">
+          Авторизоваться через Вконтакте
+        </a>
+      </div>
+    </div>
   </div>
 </nav>

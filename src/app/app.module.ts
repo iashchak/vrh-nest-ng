@@ -5,8 +5,9 @@ import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ComponentsModule } from './components/components.module';
-import { EntityDataModule } from '@ngrx/data';
-import { entityConfig } from './entity-metadata';
+import { EntitiesModule } from './entities/entities.module';
+import { HttpClientModule } from '@angular/common/http';
+import { PaginationModule } from 'ngrx-data-pagination';
 
 const config: SocketIoConfig = {
   url: 'ws://localhost:4200',
@@ -19,9 +20,12 @@ const config: SocketIoConfig = {
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
     BrowserAnimationsModule,
     AppRoutingModule,
+    HttpClientModule,
+
+    PaginationModule.forRoot(),
+    EntitiesModule,
     SocketIoModule.forRoot(config),
     ComponentsModule,
-    EntityDataModule.forRoot(entityConfig),
   ],
   providers: [],
   bootstrap: [AppComponent],

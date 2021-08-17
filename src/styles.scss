@@ -1,4 +1,2 @@
 /* You can add global styles to this file, and also import other style files */
-.cdk-overlay-container {
-  z-index: 1021; // ебучий md-bootstrap имеет ебучий z-index: 1020
-}
+@import "~bootstrap/scss/bootstrap";

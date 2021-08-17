@@ -1,6 +1,7 @@
 import { isPlatformBrowser } from '@angular/common';
 import { Component, Inject, PLATFORM_ID, ViewChild } from '@angular/core';
 import { PlyrComponent } from 'ngx-plyr';
+import { VideosService } from 'src/app/entities/videos.service';
 
 @Component({
   selector: 'app-watch',
@@ -8,7 +9,10 @@ import { PlyrComponent } from 'ngx-plyr';
   styleUrls: ['./watch.component.scss'],
 })
 export class WatchComponent {
-  constructor(@Inject(PLATFORM_ID) private readonly platformId: string) {}
+  constructor(
+    @Inject(PLATFORM_ID) private readonly platformId: string,
+    private readonly videoService: VideosService
+  ) {}
   get isPlatformBrowser() {
     return isPlatformBrowser(this.platformId);
   }
