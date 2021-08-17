@@ -31,11 +31,10 @@
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": ["src/favicon.ico", "src/assets"],
-            "styles": [
-              "node_modules/plyr/dist/plyr.css",
-              "src/styles.scss"
-            ],
-            "scripts": []
+            "styles": ["node_modules/plyr/dist/plyr.css", "src/styles.scss"],
+            "scripts": [
+              "node_modules/@ckeditor/ckeditor5-build-classic/build/translations/ru.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -116,7 +115,8 @@
               "@nestjs/swagger",
               "nestjs-minio-client",
               "swagger-ui-express",
-              "cache-manager"
+              "cache-manager",
+              "saslprep"
             ]
           },
           "configurations": {

@@ -1,0 +1,9 @@
+:host {
+  ::ng-deep .ck-content {
+    padding: 0 !important;
+  }
+  ::ng-deep .ck-focused {
+    border: none !important;
+    box-shadow: none !important;
+  }
+}

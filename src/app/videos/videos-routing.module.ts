@@ -1,16 +1,21 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { FeedComponent } from './feed/feed.component';
-import { WatchComponent } from './watch/watch.component';
+import { VideoFeedComponent } from './video-feed/video-feed.component';
+import { VideoCreateComponent } from './video-create/video-create.component';
+import { VideoWatchComponent } from './video-watch/video-watch.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: FeedComponent,
+    component: VideoFeedComponent,
   },
   {
-    path: 'watch/:videoId',
-    component: WatchComponent,
+    path: 'watch/:slug',
+    component: VideoWatchComponent,
+  },
+  {
+    path: 'new',
+    component: VideoCreateComponent,
   },
 ];
 

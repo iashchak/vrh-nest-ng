@@ -36,12 +36,12 @@
       "files": ["*.html"],
       "extends": ["plugin:@angular-eslint/template/recommended"],
       "rules": {}
-    },        
+    },
     {
       "env": {
         "jasmine": true
       },
-      "files": ["**/*.spec.ts"] 
+      "files": ["**/*.spec.ts"]
     }
   ]
 }

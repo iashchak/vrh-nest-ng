@@ -6,7 +6,7 @@ import { Column, Entity, ObjectIdColumn } from 'typeorm';
 @Entity()
 export class Company {
   @ObjectIdColumn()
-  @Transform((value) => value.toString(), { toPlainOnly: true })
+  // @Transform((value) => value.toString(), { toPlainOnly: true })
   _id!: string;
 
   @ApiProperty()

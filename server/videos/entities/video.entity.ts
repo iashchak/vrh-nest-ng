@@ -1,12 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 import { IsString, IsUrl } from 'class-validator';
+import { OneToMany } from 'typeorm';
 import { Column, Entity, ObjectIdColumn } from 'typeorm';
-
-export interface VideoSource {
-  size: number;
-  src: string;
-}
+import { VideoSource } from './video-source.entity';
 
 @Entity()
 export class Video {
@@ -36,5 +33,10 @@ export class Video {
 
   @ApiProperty()
   @Column()
+  @OneToMany(() => VideoSource, (videoSource: VideoSource) => videoSource.video)
   sources!: VideoSource[];
+
+  @ApiProperty()
+  @Column()
+  release!: Date;
 }

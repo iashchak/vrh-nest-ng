@@ -1,0 +1,14 @@
+<ng-container *ngIf="isPlatformBrowser">
+  <ng-container *ngIf="video$ | async as video">
+    <div
+      *ngIf="videoSources$ | async as videoSources"
+      plyr
+      plyrTitle="Video 1"
+      [plyrPlaysInline]="true"
+      [plyrSources]="videoSources"
+      (plyrInit)="player = $event"
+      (plyrPlay)="played($event)"
+    ></div>
+    <h1>{{ video.title }}</h1>
+  </ng-container>
+</ng-container>

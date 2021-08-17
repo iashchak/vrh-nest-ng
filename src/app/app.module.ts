@@ -8,6 +8,7 @@ import { ComponentsModule } from './components/components.module';
 import { EntitiesModule } from './entities/entities.module';
 import { HttpClientModule } from '@angular/common/http';
 import { PaginationModule } from 'ngrx-data-pagination';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 const config: SocketIoConfig = {
   url: 'ws://localhost:4200',
@@ -21,7 +22,6 @@ const config: SocketIoConfig = {
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
-
     PaginationModule.forRoot(),
     EntitiesModule,
     SocketIoModule.forRoot(config),

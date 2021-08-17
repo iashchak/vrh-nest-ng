@@ -1,0 +1,161 @@
+<form
+  *ngIf="isPlatformBrowser"
+  [formGroup]="videoForm"
+  (submit)="handleSubmit($event)"
+>
+  <div class="col-12">
+    <div class="h-100 p-5 bg-light border rounded-3">
+      <h2>Файл</h2>
+      <div class="row mb-3">
+        <div class="col-sm-12">
+          <label for="file" class="form-label">
+            Укажите файл в высоком разрешении
+          </label>
+          <input
+            class="form-control form-control-lg"
+            formControlName="file"
+            id="file"
+            type="file"
+            accept="video/*"
+          />
+        </div>
+        <div class="col-12">
+          <ngb-alert
+            *ngIf="isAnyError('file')"
+            class="col-sm-10"
+            [dismissible]="false"
+            class="d-block mt-3"
+            type="danger"
+          >
+            This tab content DOM will always stay in DOM
+          </ngb-alert>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12">
+    <div class="h-100 p-5 bg-light border rounded-3">
+      <h2>Описание</h2>
+
+      <div class="row mb-3">
+        <label for="title" class="col-sm-2 col-form-label">Заголовок</label>
+        <div class="col-sm-10">
+          <input
+            type="text"
+            class="form-control"
+            id="title"
+            formControlName="title"
+          />
+        </div>
+        <div class="col-12">
+          <ngb-alert
+            *ngIf="isAnyError('title')"
+            class="col-sm-10"
+            [dismissible]="false"
+            class="d-block mt-3"
+            type="danger"
+          >
+            This tab content DOM will always stay in DOM
+          </ngb-alert>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <label for="slug" class="col-sm-2 col-form-label"> Адрес </label>
+        <div class="col-sm-10">
+          <div class="input-group">
+            <span class="input-group-text">http://vrh42.ru/watch/</span>
+            <input
+              type="text"
+              class="form-control"
+              id="slug"
+              formControlName="slug"
+              aria-describedby="basic-addon3"
+            />
+          </div>
+        </div>
+        <div class="col-12">
+          <ngb-alert
+            *ngIf="isAnyError('slug')"
+            class="col-sm-10"
+            [dismissible]="false"
+            class="d-block mt-3"
+            type="danger"
+          >
+            This tab content DOM will always stay in DOM
+          </ngb-alert>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <label for="description" class="col-sm-2 col-form-label">
+          Описание
+        </label>
+        <div class="col-sm-10">
+          <ckeditor
+            id="description"
+            class="form-control"
+            [editor]="editor"
+            formControlName="description"
+          ></ckeditor>
+        </div>
+        <div class="col-12">
+          <ngb-alert
+            *ngIf="isAnyError('description')"
+            class="col-sm-10"
+            [dismissible]="false"
+            class="d-block mt-3"
+            type="danger"
+          >
+            This tab content DOM will always stay in DOM
+          </ngb-alert>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <label for="inputPassword3" class="col-sm-2 col-form-label">
+          Релиз
+        </label>
+        <div class="col-sm-10">
+          <div class="input-group">
+            <input
+              class="form-control"
+              placeholder="dd-mm-yyyy"
+              formControlName="releaseDate"
+              ngbDatepicker
+              #d="ngbDatepicker"
+              (click)="d?.open()"
+              (dateSelect)="d?.close()"
+            />
+            <ngb-timepicker
+              [spinners]="false"
+              class="form-control"
+              formControlName="releaseTime"
+            ></ngb-timepicker>
+          </div>
+        </div>
+        <div class="col-12">
+          <ngb-alert
+            *ngIf="isAnyError('releaseDate') || isAnyError('releaseTime')"
+            class="col-sm-10"
+            [dismissible]="false"
+            class="d-block mt-3"
+            type="danger"
+          >
+            This tab content DOM will always stay in DOM
+          </ngb-alert>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12">
+    <div class="h-100 p-5 bg-light border rounded-3">
+      <h2>Превью</h2>
+      <button
+        class="btn btn-outline-secondary"
+        type="submit"
+        [disabled]="videoForm.invalid"
+      >
+        Example button
+      </button>
+    </div>
+  </div>
+</form>

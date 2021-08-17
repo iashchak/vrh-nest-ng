@@ -104,7 +104,7 @@ export class MongooseCrudService<T> extends CrudService<T> {
     return data;
   }
   async createOne(req: CrudRequest, dto: T): Promise<T> {
-    return await this.modelRepository.create(dto);
+    return await this.modelRepository.save(this.modelRepository.create(dto));
   }
   async createMany(req: CrudRequest, dto: CreateManyDto<T>): Promise<T[]> {
     const { ops } = await this.modelRepository.insertMany(dto.bulk);
@@ -132,10 +132,7 @@ export class MongooseCrudService<T> extends CrudService<T> {
   }
   async deleteOne(req: CrudRequest): Promise<void | T> {
     const { id } = this.buildQuery(req);
-    const data = await this.modelRepository.findOne(id);
-    !data &&
-      this.throwNotFoundException(this.modelRepository.target.toString());
-    await this.modelRepository.findOneAndDelete(id);
-    return data;
+    await this.modelRepository.findOneAndDelete({ id });
+    return;
   }
 }

@@ -5,6 +5,7 @@ import {
   DefaultDataServiceConfig,
   DefaultDataServiceFactory,
   EntityDataService,
+  HttpUrlGenerator,
 } from '@ngrx/data';
 import { EffectsModule } from '@ngrx/effects';
 import { EntityMetadataMap } from '@ngrx/data';
@@ -16,6 +17,7 @@ import { StoreModule } from '@ngrx/store';
 import { VideosService } from './videos.service';
 import { ExtendedDataServiceFactory } from './extended-data-service.factory';
 import { environment } from '../../environments/environment';
+import { PluralHttpUrlGenerator } from './plural-http-url-generator.service';
 
 export const entityMetadata: EntityMetadataMap = {
   Company: {
@@ -50,6 +52,7 @@ const defaultDataServiceConfig: DefaultDataServiceConfig = {
   ],
   providers: [
     { provide: DefaultDataServiceConfig, useValue: defaultDataServiceConfig },
+    { provide: HttpUrlGenerator, useClass: PluralHttpUrlGenerator },
     {
       provide: DefaultDataServiceFactory,
       useClass: ExtendedDataServiceFactory,
